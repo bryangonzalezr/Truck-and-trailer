@@ -1,0 +1,84 @@
+Instance: chao_1.25, Execution time: 37737 ms, Total distance: 485.676
+Instance: chao_1.30a, Execution time: 57028 ms, Total distance: 543.677
+Instance: chao_1.30b, Execution time: 45888 ms, Total distance: 526.404
+Instance: chao_1.30c, Execution time: 37998 ms, Total distance: 1.79769  //infactible
+Instance: chao_1.40a, Execution time: 102626 ms, Total distance: 741.647
+Instance: chao_1.40b, Execution time: 90517 ms, Total distance: 704.859
+Instance: chao_1.40c, Execution time: 62009 ms, Total distance: 1.79769  //infactible
+Instance: chao_10.25, Execution time: 43468 ms, Total distance: 512.305
+Instance: chao_10.30a, Execution time: 59496 ms, Total distance: 622.804
+Instance: chao_10.30b, Execution time: 48473 ms, Total distance: 586.453
+Instance: chao_10.30c, Execution time: 38265 ms, Total distance: 1.79769  //infactible
+Instance: chao_10.40a, Execution time: 99904 ms, Total distance: 770.643
+Instance: chao_10.40b, Execution time: 79395 ms, Total distance: 745.72
+Instance: chao_10.40c, Execution time: 64349 ms, Total distance: 1.79769  //infactible
+Instance: chao_11.25, Execution time: 31041 ms, Total distance: 588.464
+Instance: chao_11.30a, Execution time: 43161 ms, Total distance: 707.965
+Instance: chao_11.30b, Execution time: 49963 ms, Total distance: 698.76
+Instance: chao_11.30c, Execution time: 57446 ms, Total distance: 1.79769  //infactible
+Instance: chao_11.40a, Execution time: 122284 ms, Total distance: 926.718
+Instance: chao_11.40b, Execution time: 89079 ms, Total distance: 988.003
+Instance: chao_11.40c, Execution time: 96368 ms, Total distance: 1.79769  //infactible
+Instance: chao_12.25, Execution time: 38945 ms, Total distance: 802.768
+Instance: chao_12.30a, Execution time: 68130 ms, Total distance: 1.79769  //infactible
+Instance: chao_12.30b, Execution time: 59164 ms, Total distance: 1.79769  //infactible
+Instance: chao_12.30c, Execution time: 55543 ms, Total distance: 1.79769  //infactible
+Instance: chao_12.40a, Execution time: 107277 ms, Total distance: 1.79769  //infactible
+Instance: chao_12.40b, Execution time: 102788 ms, Total distance: 1.79769  //infactible
+Instance: chao_12.40c, Execution time: 94825 ms, Total distance: 1.79769  //infactible
+Instance: chao_2.25, Execution time: 49665 ms, Total distance: 1.79769  //infactible
+Instance: chao_2.30a, Execution time: 58844 ms, Total distance: 682.81
+Instance: chao_2.30b, Execution time: 48413 ms, Total distance: 680.042
+Instance: chao_2.30c, Execution time: 53298 ms, Total distance: 1.79769  //infactible
+Instance: chao_2.40a, Execution time: 141122 ms, Total distance: 1.79769  //infactible
+Instance: chao_2.40b, Execution time: 96348 ms, Total distance: 912.352
+Instance: chao_2.40c, Execution time: 89687 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.25, Execution time: 46579 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.30a, Execution time: 67604 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.30b, Execution time: 61429 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.30c, Execution time: 53112 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.40a, Execution time: 134859 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.40b, Execution time: 119969 ms, Total distance: 1.79769  //infactible
+Instance: chao_3.40c, Execution time: 87296 ms, Total distance: 1.79769  //infactible
+Instance: chao_4.25, Execution time: 66857 ms, Total distance: 522.408
+Instance: chao_4.30a, Execution time: 96466 ms, Total distance: 629.14
+Instance: chao_4.30b, Execution time: 72117 ms, Total distance: 546.836
+Instance: chao_4.30c, Execution time: 58114 ms, Total distance: 1.79769
+Instance: chao_4.40a, Execution time: 145451 ms, Total distance: 722.581
+Instance: chao_4.40b, Execution time: 143349 ms, Total distance: 735.386
+Instance: chao_4.40c, Execution time: 96931 ms, Total distance: 1.79769  //infactible
+Instance: chao_5.25, Execution time: 53412 ms, Total distance: 1.79769  //infactible
+Instance: chao_5.30a, Execution time: 77134 ms, Total distance: 1.79769  //infactible
+Instance: chao_5.30b, Execution time: 58594 ms, Total distance: 1.79769  //infactible
+Instance: chao_5.30c, Execution time: 49611 ms, Total distance: 1.79769  //infactible
+Instance: chao_5.40a, Execution time: 156298 ms, Total distance: 1.79769  //infactible
+Instance: chao_5.40b, Execution time: 89939 ms, Total distance: 835.761
+Instance: chao_5.40c, Execution time: 85102 ms, Total distance: 1.79769
+Instance: chao_6.25, Execution time: 46892 ms, Total distance: 1.79769
+Instance: chao_6.30a, Execution time: 68492 ms, Total distance: 1.79769
+Instance: chao_6.30b, Execution time: 55621 ms, Total distance: 1.79769
+Instance: chao_6.30c, Execution time: 50050 ms, Total distance: 1.79769
+Instance: chao_6.40a, Execution time: 130880 ms, Total distance: 1.79769
+Instance: chao_6.40b, Execution time: 99151 ms, Total distance: 1.79769
+Instance: chao_6.40c, Execution time: 84935 ms, Total distance: 1.79769
+Instance: chao_7.25, Execution time: 38036 ms, Total distance: 482.082
+Instance: chao_7.30a, Execution time: 54984 ms, Total distance: 584.322
+Instance: chao_7.30b, Execution time: 54033 ms, Total distance: 592.166
+Instance: chao_7.30c, Execution time: 51512 ms, Total distance: 1.79769
+Instance: chao_7.40a, Execution time: 119367 ms, Total distance: 765.232
+Instance: chao_7.40b, Execution time: 99687 ms, Total distance: 705.394
+Instance: chao_7.40c, Execution time: 88553 ms, Total distance: 1.79769
+Instance: chao_8.25, Execution time: 35943 ms, Total distance: 1.79769
+Instance: chao_8.30a, Execution time: 53587 ms, Total distance: 1.79769
+Instance: chao_8.30b, Execution time: 54765 ms, Total distance: 1.79769
+Instance: chao_8.30c, Execution time: 50100 ms, Total distance: 1.79769
+Instance: chao_8.40a, Execution time: 99938 ms, Total distance: 917.582
+Instance: chao_8.40b, Execution time: 92458 ms, Total distance: 1.79769
+Instance: chao_8.40c, Execution time: 84924 ms, Total distance: 1.79769
+Instance: chao_9.25, Execution time: 36308 ms, Total distance: 1.79769
+Instance: chao_9.30a, Execution time: 54847 ms, Total distance: 1.79769
+Instance: chao_9.30b, Execution time: 55416 ms, Total distance: 1.79769
+Instance: chao_9.30c, Execution time: 48765 ms, Total distance: 1.79769
+Instance: chao_9.40a, Execution time: 96432 ms, Total distance: 1.79769
+Instance: chao_9.40b, Execution time: 86590 ms, Total distance: 1.79769
+Instance: chao_9.40c, Execution time: 84096 ms, Total distance: 1.79769

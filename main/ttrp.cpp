@@ -66,8 +66,8 @@ void printInstance(Instance instance) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 5) {
-        std::cerr << "Usage: " << argv[0] << " <instance_file> <num_iterations> <solution_type> <run_number>" << std::endl;
+    if (argc != 7) {
+        std::cerr << "Usage: " << argv[0] << " <instance_file> <num_iterations> <solution_type> <run_number> <sol_folder> <seed>" << std::endl;
         return 1;
     }
     
@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
     int num_iterations = std::stoi(argv[2]);
     std::string solution_type = argv[3];
     int run_number = std::stoi(argv[4]);
+    std::string solution_folder = argv[5];
+    unsigned seed = std::stoul(argv[6]);
 
     double best_distance = std::numeric_limits<double>::max();
     Solution best_solution;
@@ -85,7 +87,7 @@ int main(int argc, char* argv[]) {
 
     for (int i = 0; i < num_iterations; ++i) {
         Solution solution;
-        solution.simple_greedy(instance);
+        solution.simple_greedy(instance, seed + i);
 
         double distance = solution.evaluate(instance);
         if (distance <= best_distance) {
@@ -99,15 +101,10 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Best solution: ";
     best_solution.printSolution();
-    std::cout << "Total distance:" << best_distance << std::endl;
-    std::cout << "Execution time:" << total_time << " ms" << std::endl;
+    std::cout << "Total distance: " << best_distance << std::endl;
+    std::cout << "Execution time: " << total_time << " ms" << std::endl;
 
-
-    best_solution.exportSolution(instance, instance_file, solution_type, run_number);
-
-    for (Client* client : best_solution.assigned_clients) {
-        delete client;
-    }
+    best_solution.exportSolution(instance, instance_file, solution_type, run_number, solution_folder);
 
     return 0;
 }

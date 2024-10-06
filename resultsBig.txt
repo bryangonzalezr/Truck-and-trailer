@@ -1,0 +1,10 @@
+Instance: small1-10A, Solution: SolutionB, Run: 1, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 2, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 3, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 4, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 5, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 6, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 7, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 8, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 9, Execution time:  ms, Total distance: 
+Instance: small1-10A, Solution: SolutionB, Run: 10, Execution time:  ms, Total distance: 

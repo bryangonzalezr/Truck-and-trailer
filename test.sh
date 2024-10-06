@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define the directory containing the instance files
-INSTANCE_DIR="instancesMedium"
+INSTANCE_DIR="instances"
 
 # Define the output file name
-OUTPUT_FILE="resultsMedium.txt"
+OUTPUT_FILE="resultsBig.txt"
 
 # Number of iterations per run
 ITERATIONS=1000
@@ -12,19 +12,31 @@ ITERATIONS=1000
 # Number of runs per solution
 NUM_RUNS=10
 
+# Seed
+SEED=1
+
+# Solution Folder
+SOLUTION_FOLDER="sols_test"
+
 # Remove the existing output file
 rm -f "$OUTPUT_FILE"
 
 # Define solution types
 SOLUTION_TYPES=("SolutionB" "SolutionC" "SolutionR")
 
+
+
 # Iterate over each instance file in the directory
-for instance_file in $INSTANCE_DIR/*.dat; do
+
+# Create the solution folder if it does not exist
+mkdir -p "$SOLUTION_FOLDER"
+
+for instance_file in $INSTANCE_DIR/*.txt; do
     # Extract the instance name from the file path
-    instance_name=$(basename "$instance_file" .dat)
+    instance_name=$(basename "$instance_file" .txt)
 
     # Create instance directory
-    instance_dir="solutionsMedium/$instance_name"
+    instance_dir="$SOLUTION_FOLDER/$instance_name"
     mkdir -p "$instance_dir"
 
     # Run each solution type
@@ -36,7 +48,7 @@ for instance_file in $INSTANCE_DIR/*.dat; do
         for ((run=1; run<=NUM_RUNS; run++)); do
             # Run the C++ program with the instance file as an argument
             echo "Running instance: $instance_name with $solution_type, run $run"
-            execution_output=$("./$solution_type" "$instance_file" $ITERATIONS $solution_type $run)
+            execution_output=$("./$solution_type" "$instance_file" $ITERATIONS $solution_type $run $SOLUTION_FOLDER $SEED)
 
             # Extract the execution time and total distance from the execution output
             execution_time=$(echo "$execution_output" | grep -oP 'Execution time:\K\d+')

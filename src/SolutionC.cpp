@@ -47,16 +47,14 @@ double Solution::evaluate(Instance& instance) {
     
 }
 
-Client* Solution::select_next_client(Instance& instance, Route& route) {
+Client* Solution::select_next_client(Instance& instance, Route& route, std::mt19937& gen) {
     int current_location = route.clients.empty() ? 0 : route.clients.back()->number;
     vector<pair<double, Client*>> sorted_clients;
 
-        for (Client* client : instance.clients) {
+    for (Client* client : instance.clients) {
         if (assigned_clients.count(client) == 0 
-        // && ((client->truck_customer && route.clients.empty() && !route.trailer_attached && !route.trailer_location) ? false : true) 
         && (client->truck_customer? route.current_truck_capacity : route.get_current_capacity()) >= client->demand){
             
-            // cout << "Checking client: " << client->number <<" demand: "<<client->demand <<" truck client:"<<client->truck_customer<<endl;
             double distance = distances[current_location][client->number];
             double distance_back = (route.trailer_location ==nullptr) ? 
                 distances[client->number][0] : 
@@ -65,20 +63,19 @@ Client* Solution::select_next_client(Instance& instance, Route& route) {
 
             sorted_clients.emplace_back(fitness, client);
         }
-
     }
     sort(sorted_clients.begin(), sorted_clients.end());
     
-
     double average = instance.getTotalDemand()/instance.N_trucks;
-    double penalty=0.0;
+    double penalty = 0.0;
     if(route.total_demand() > average){
         double alpha = 1;
         penalty = pow((route.total_demand()-average)/(alpha*average),2);
     }
+
     if (!sorted_clients.empty()) {
         vector<Client*> candidates;
-        int count = min(3, (int)sorted_clients.size()); // Ensure we don't exceed the size of the vector
+        int count = min(3, (int)sorted_clients.size());
         if(route.clients.empty()){
             for (int i = 0; i < sorted_clients.size(); i++)
             {
@@ -95,39 +92,26 @@ Client* Solution::select_next_client(Instance& instance, Route& route) {
                 candidates.push_back(sorted_clients[i].second);
             }
         }
-        // Shuffle the first 5 elements
-        shuffle(candidates.begin(), candidates.begin() + count, default_random_engine(random_device()()));
-            // 20 % of the time, return the trailer location
-
-
-        // if(!route.trailer_attached){
-        //     // 20 % of the time, return the trailer location
-        //     if (rand() % 100 < 80) {
-            
-        //         return nullptr;
-        //     }else{
-        //         return candidates[0];
-        //     }
-            
-        // }
-        if (rand() % 100 < penalty*100) {
         
+        // Use the seeded random number generator for shuffling
+        shuffle(candidates.begin(), candidates.begin() + count, gen);
+
+        // Use the seeded random number generator for the penalty check
+        std::uniform_real_distribution<> dis(0.0, 1.0);
+        if (dis(gen) < penalty) {
             return nullptr;
-        }else{
+        } else {
             return candidates[0];
         }
-    
-        
-        // Return one of the shuffled candidates
-        return candidates[0];
-        
     }
 
     return nullptr;
-
 }
 
-void Solution::simple_greedy(Instance& instance) {
+void Solution::simple_greedy(Instance& instance, unsigned seed) {
+    // Create a seeded random number generator
+    std::mt19937 gen(seed);
+
     precompute_distances(instance);
     // Create trucks and trailers
     std::vector<Truck*> trucks(instance.N_trucks, nullptr);
@@ -144,12 +128,12 @@ void Solution::simple_greedy(Instance& instance) {
         Trailer* trailer = (i < instance.N_trailers) ? trailers[i] : nullptr;
         Route route(truck, trailer);
         while (route.current_trailer_capacity + route.current_truck_capacity > 0) {
-            Client* nearest_client = select_next_client(instance, route);
+            Client* nearest_client = select_next_client(instance, route, gen);
             if (nearest_client == nullptr) {
                 if(!route.trailer_attached && !route.clients.empty() && route.trailer_location!=nullptr){
                     route.add_client(route.trailer_location, instance);
                 }else{
-                    break;;
+                    break;
                 }
             }else{
                 route.add_client(nearest_client, instance);
@@ -158,8 +142,9 @@ void Solution::simple_greedy(Instance& instance) {
         }
         route.add_client(&instance.deposit, instance);
         routes.push_back(route);
-        }
     }
+}
+
 
 void Solution::printSolution(){
     cout<<"Feasible: "<<(isFeasible ? "true" : "false")<<endl;
@@ -181,7 +166,7 @@ void Solution::printSolution(){
     }
 }
 
-void Solution::exportSolution(Instance& instance, const std::string& filename, const std::string& solutionType, int runNumber) {
+void Solution::exportSolution(Instance& instance, const std::string& filename, const std::string& solutionType, int runNumber, const std::string& solutionFolder) {
     // Export the solution to a file
     size_t pos = filename.find_last_of(".");
     size_t pos2 = filename.find_last_of("/");
@@ -193,7 +178,7 @@ void Solution::exportSolution(Instance& instance, const std::string& filename, c
     if(pos2 != std::string::npos){
         base_filename = base_filename.substr(pos2+1);
     }
-    std::string full_filename = "solutionsMedium/"+ filename2 + "/"+solutionType +"/"+ base_filename;
+    std::string full_filename = solutionFolder+"/"+ filename2 + "/"+solutionType +"/"+ base_filename;
     cout<<"Exporting solution to: "<<full_filename<<endl;
     std::ofstream file(full_filename);
     if (!file.is_open()) {

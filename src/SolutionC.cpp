@@ -202,7 +202,6 @@ void Solution::exportSolution(Instance& instance, const std::string& filename, c
         file << std::endl;
     }
     file << "Evaluación: " << evaluate(instance) << std::endl;
-    file << "Feasible: " << (isFeasible ? "true" : "false") << std::endl;
 
     file.close();
 }

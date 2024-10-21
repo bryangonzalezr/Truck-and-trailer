@@ -16,12 +16,12 @@ void Route::add_client(Client* client, Instance& instance) {
     if(!trailer_attached && (trailer_location != nullptr) && (trailer_location->number == client->number)){
         trailer_attached = true;
         trailer_location = nullptr;
-        if(current_truck_capacity <= current_trailer_capacity - instance.trailer_capacity){
-            current_truck_capacity += current_trailer_capacity - instance.trailer_capacity;
-            current_trailer_capacity = instance.trailer_capacity;
-        }else{
-            current_trailer_capacity = current_truck_capacity;
+        if(instance.truck_capacity-current_truck_capacity <= current_trailer_capacity){
+            current_trailer_capacity = instance.truck_capacity-current_truck_capacity;
             current_truck_capacity = instance.truck_capacity;
+        }else{
+            current_truck_capacity += current_trailer_capacity;
+            current_trailer_capacity = 0;
         }
     } else {
         if (client->truck_customer && trailer_attached) {

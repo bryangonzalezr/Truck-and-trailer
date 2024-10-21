@@ -116,6 +116,9 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
     // Create trucks and trailers
     std::vector<Truck*> trucks(instance.N_trucks, nullptr);
     std::vector<Trailer*> trailers(instance.N_trailers, nullptr);
+
+    
+
     for (int i = 0; i < instance.N_trucks; ++i) {
         trucks[i] = new Truck(instance.truck_capacity);
     }
@@ -129,6 +132,7 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
         Route route(truck, trailer);
         while (route.current_trailer_capacity + route.current_truck_capacity > 0) {
             Client* nearest_client = select_next_client(instance, route, gen);
+
             if (nearest_client == nullptr) {
                 if(!route.trailer_attached && !route.clients.empty() && route.trailer_location!=nullptr){
                     route.add_client(route.trailer_location, instance);
@@ -198,6 +202,7 @@ void Solution::exportSolution(Instance& instance, const std::string& filename, c
         file << std::endl;
     }
     file << "Evaluación: " << evaluate(instance) << std::endl;
+    file << "Feasible: " << (isFeasible ? "true" : "false") << std::endl;
 
     file.close();
 }

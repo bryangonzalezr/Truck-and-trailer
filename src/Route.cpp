@@ -13,7 +13,7 @@ Route::Route(Truck* truck, Trailer* trailer)
     current_capacity -= deposit.demand;
 }
 
-void Route::add_client(Client* client, Instance& instance) {
+void Route::add_client(Client* client, Instance& instance, Client* current_client) {
     if(!trailer_attached && (trailer_location != nullptr) && (trailer_location->number == client->number)){
         trailer_attached = true;
         trailer_location = nullptr;
@@ -27,7 +27,7 @@ void Route::add_client(Client* client, Instance& instance) {
     } else {
         if (client->truck_customer && trailer_attached) {
             trailer_attached = false;
-            trailer_location = clients.empty() ? nullptr : client;
+            trailer_location = clients.empty() ? nullptr : current_client;
         }
         if(!trailer_attached) {
             current_truck_capacity -= client->demand;

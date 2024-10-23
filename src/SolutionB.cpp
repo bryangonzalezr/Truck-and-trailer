@@ -125,16 +125,17 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
             int clients_assigned_to_route = 0;
             
             while (clients_assigned_to_route < 3) {
+                Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
                 Client* next_client = select_next_client(instance, route, gen);
 
                 if (next_client != nullptr) {
-                    route.add_client(next_client, instance);
+                    route.add_client(next_client, instance, current_client);
                     assigned_clients.insert(next_client);
                     all_clients_assigned = false;
                     clients_assigned_to_route++;
                 } else {
                     if (route.trailer_location != nullptr) {
-                        route.add_client(route.trailer_location, instance);
+                        route.add_client(route.trailer_location, instance, current_client);
                         assigned_clients.insert(route.trailer_location);
                     }
                     break; // Exit the while loop if no more clients can be assigned

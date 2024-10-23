@@ -132,21 +132,23 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
         Trailer* trailer = (i < instance.N_trailers) ? trailers[i] : nullptr;
         Route route(truck, trailer);
         while (route.current_trailer_capacity + route.current_truck_capacity > 0) {
+            Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
             Client* nearest_client = select_next_client(instance, route, gen);
             
 
             if (nearest_client == nullptr) {
                 if(!route.trailer_attached && !route.clients.empty() && route.trailer_location!=nullptr){
-                    route.add_client(route.trailer_location, instance);
+                    route.add_client(route.trailer_location, instance, current_client);
                 }else{
                     break;
                 }
             }else{
-                route.add_client(nearest_client, instance);
+                route.add_client(nearest_client, instance, current_client);
                 assigned_clients.insert(nearest_client);
             }     
         }
-        route.add_client(&instance.deposit, instance);
+        Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
+        route.add_client(&instance.deposit, instance, current_client);
         routes.push_back(route);
     }
 }

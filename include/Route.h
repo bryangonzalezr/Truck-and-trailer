@@ -18,7 +18,7 @@ public:
     Client* trailer_location;
 
     Route(Truck* truck, Trailer* trailer = nullptr);
-    void add_client(Client* client, Instance& instance);
+    void add_client(Client* client, Instance& instance, Client* current_client = nullptr);
     double total_distance(Client& deposit);
     int total_demand();
     int get_current_capacity();

@@ -54,6 +54,7 @@ Client* Solution::select_next_client(Instance& instance, Route& route, std::mt19
     for (Client* client : instance.clients) {
         if (assigned_clients.count(client) == 0 
         && (client->truck_customer? route.current_truck_capacity : route.get_current_capacity()) >= client->demand){
+        
             
             double distance = distances[current_location][client->number];
             double distance_back = (route.trailer_location ==nullptr) ? 
@@ -132,6 +133,7 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
         Route route(truck, trailer);
         while (route.current_trailer_capacity + route.current_truck_capacity > 0) {
             Client* nearest_client = select_next_client(instance, route, gen);
+            
 
             if (nearest_client == nullptr) {
                 if(!route.trailer_attached && !route.clients.empty() && route.trailer_location!=nullptr){

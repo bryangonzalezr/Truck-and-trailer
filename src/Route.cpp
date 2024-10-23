@@ -1,4 +1,5 @@
 #include "Route.h"
+#include <iostream>
 
 using namespace std;
 
@@ -26,7 +27,7 @@ void Route::add_client(Client* client, Instance& instance) {
     } else {
         if (client->truck_customer && trailer_attached) {
             trailer_attached = false;
-            trailer_location = clients.empty() ? nullptr : clients.back();
+            trailer_location = clients.empty() ? nullptr : client;
         }
         if(!trailer_attached) {
             current_truck_capacity -= client->demand;

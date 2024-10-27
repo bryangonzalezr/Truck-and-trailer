@@ -18,9 +18,11 @@ void Route::add_client(Client* client, Instance& instance, Client* current_clien
         trailer_attached = true;
         trailer_location = nullptr;
         if(instance.truck_capacity-current_truck_capacity <= current_trailer_capacity){
-            current_trailer_capacity = instance.truck_capacity-current_truck_capacity;
+            cout<<"Attaching trailer, still have space"<<endl;
+            current_trailer_capacity -= instance.truck_capacity-current_truck_capacity;
             current_truck_capacity = instance.truck_capacity;
         }else{
+            cout<<"Attaching trailer, all trailer capacity full"<<endl;
             current_truck_capacity += current_trailer_capacity;
             current_trailer_capacity = 0;
         }

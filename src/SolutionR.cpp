@@ -104,50 +104,42 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
     // Create trucks and trailers
     std::vector<Truck*> trucks(instance.N_trucks, nullptr);
     std::vector<Trailer*> trailers(instance.N_trailers, nullptr);
+
+    
+
     for (int i = 0; i < instance.N_trucks; ++i) {
         trucks[i] = new Truck(instance.truck_capacity);
     }
     for (int i = 0; i < instance.N_trailers; ++i) {
         trailers[i] = new Trailer(instance.trailer_capacity);
     }
-    // Create routes
-    vector <Route> routes;
+    // Assign clients to routes
+    // cout << "Assigning clients to routes\n\n\n\n" << endl;
     for (int i = 0; i < instance.N_trucks; ++i) {
+        // cout << "Assigning clients to route " << i << endl;
         Truck* truck = trucks[i];
         Trailer* trailer = (i < instance.N_trailers) ? trailers[i] : nullptr;
-        Route route(truck, trailer); 
-        routes.push_back(route);   
-    }
-    // Assign clients to routes simultaneously
-    bool all_clients_assigned = false;
-    while (!all_clients_assigned) {
-        all_clients_assigned = true;
-        for (Route& route : routes) {
-            int clients_assigned_to_route = 0;
+        Route route(truck, trailer);
+        while (1) {
+            Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
+            Client* nearest_client = select_next_client(instance, route, gen);
             
-            while (clients_assigned_to_route < 3) {
-                Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
-                Client* next_client = select_next_client(instance, route, gen);
-
-                if (next_client != nullptr) {
-                    route.add_client(next_client, instance, current_client);
-                    assigned_clients.insert(next_client);
-                    all_clients_assigned = false;
-                    clients_assigned_to_route++;
-                } else {
-                    if (route.trailer_location != nullptr) {
-                        route.add_client(route.trailer_location, instance, current_client);
-                        assigned_clients.insert(route.trailer_location);
-                    }
-                    break; // Exit the while loop if no more clients can be assigned
+            // cout<<"Nearest client: "<<(nearest_client ? nearest_client->number : -1)<<endl;
+            if (nearest_client == nullptr) {
+                if(!route.trailer_attached && !route.clients.empty() && route.trailer_location!=nullptr){
+                    route.add_client(route.trailer_location, instance, current_client);
+                }else{
+                    break;
                 }
-            }
+            }else{
+                route.add_client(nearest_client, instance, current_client);
+                assigned_clients.insert(nearest_client);
+            }     
         }
+        Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
+        route.add_client(&instance.deposit, instance, current_client);
+        routes.push_back(route);
     }
-    for (Route route : routes) {
-        route.add_client(&instance.deposit, instance);
-        this->routes.push_back(route);
-    }   
 }
 
 void Solution::printSolution(){

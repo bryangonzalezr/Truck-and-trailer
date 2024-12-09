@@ -50,7 +50,6 @@ double Solution::evaluate(Instance& instance) {
 Client* Solution::select_next_client(Instance& instance, Route& route, std::mt19937& gen) {
     int current_location = route.clients.empty() ? 0 : route.clients.back()->number;
     vector<pair<double, Client*>> sorted_clients;
-
     for (Client* client : instance.clients) {
         if (assigned_clients.count(client) == 0 
         && (client->truck_customer? route.current_truck_capacity : route.get_current_capacity()) >= client->demand){
@@ -65,8 +64,13 @@ Client* Solution::select_next_client(Instance& instance, Route& route, std::mt19
             sorted_clients.emplace_back(fitness, client);
         }
     }
+
+    
     sort(sorted_clients.begin(), sorted_clients.end());
     
+    
+
+
     double average = instance.getTotalDemand()/instance.N_trucks;
     double penalty = 0.0;
     if(route.total_demand() > average){
@@ -127,15 +131,17 @@ void Solution::simple_greedy(Instance& instance, unsigned seed) {
         trailers[i] = new Trailer(instance.trailer_capacity);
     }
     // Assign clients to routes
+    // cout << "Assigning clients to routes\n\n\n\n" << endl;
     for (int i = 0; i < instance.N_trucks; ++i) {
+        // cout << "Assigning clients to route " << i << endl;
         Truck* truck = trucks[i];
         Trailer* trailer = (i < instance.N_trailers) ? trailers[i] : nullptr;
         Route route(truck, trailer);
-        while (route.current_trailer_capacity + route.current_truck_capacity > 0) {
+        while (1) {
             Client* current_client = route.clients.empty() ? &instance.deposit : route.clients.back();
             Client* nearest_client = select_next_client(instance, route, gen);
             
-
+            // cout<<"Nearest client: "<<(nearest_client ? nearest_client->number : -1)<<endl;
             if (nearest_client == nullptr) {
                 if(!route.trailer_attached && !route.clients.empty() && route.trailer_location!=nullptr){
                     route.add_client(route.trailer_location, instance, current_client);

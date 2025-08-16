@@ -35,13 +35,12 @@ double Solution::evaluate(Instance& instance) {
     //check if all instance.clients are on route.assigned_clients
     for (Client* client : instance.clients) {
         if (assigned_clients.count(client) == 0) {
-            total_distance += 1000;
             isFeasible = false;
             
         }
     }
 
-    return total_distance;
+    return total_distance,isFeasible ? 0 : 1;
     
 }
 

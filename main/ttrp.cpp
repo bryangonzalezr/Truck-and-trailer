@@ -84,16 +84,25 @@ int main(int argc, char* argv[]) {
     auto start_time = std::chrono::steady_clock::now();
     Instance instance(0, 0.0, 0, 0.0, std::vector<Client*>());
     parse_instance(instance_file, instance);
+    int current_iteration = 0;
 
-    for (int i = 0; i < num_iterations; ++i) {
+    for (int i = 0; i ==i; ++i) {
         Solution solution;
         solution.simple_greedy(instance, seed + i);
 
-        double distance = solution.evaluate(instance);
+        double distance;
+        int isFeasible;
+        distance,isFeasible = solution.evaluate(instance);
         if (distance <= best_distance) {
             best_distance = distance;
             best_solution = solution;
         }
+        
+        if(solution.isFeasible){
+            break;
+        }
+        current_iteration++;
+
     }
 
     auto end_time = std::chrono::steady_clock::now();
@@ -103,6 +112,8 @@ int main(int argc, char* argv[]) {
     best_solution.printSolution();
     std::cout << "Total distance: " << best_distance << std::endl;
     std::cout << "Execution time: " << total_time << " ms" << std::endl;
+    std::cout << "Feasible: " << (best_solution.isFeasible ? "true" : "false") << std::endl;
+    std::cout << "Iterations: " << current_iteration << std::endl;
 
     best_solution.exportSolution(instance, instance_file, solution_type, run_number, solution_folder);
 

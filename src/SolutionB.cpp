@@ -27,20 +27,20 @@ void Solution::precompute_distances(Instance& instance) {
 }
 
 double Solution::evaluate(Instance& instance) {
-    isFeasible = true;
+    this->isFeasible = true;
     double total_distance = 0;
     for (Route& route : routes) {
         total_distance += route.total_distance(instance.deposit);
     }
-    //check if all instance.clients are on route.assigned_clients
     for (Client* client : instance.clients) {
         if (assigned_clients.count(client) == 0) {
-            isFeasible = false;
+            //Big number to indicate infeasibility
+            total_distance += 10000;
+            this->isFeasible = false;
             
         }
     }
-
-    return total_distance,isFeasible ? 0 : 1;
+    return total_distance;
     
 }
 

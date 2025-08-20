@@ -85,24 +85,29 @@ int main(int argc, char* argv[]) {
     Instance instance(0, 0.0, 0, 0.0, std::vector<Client*>());
     parse_instance(instance_file, instance);
     int current_iteration = 0;
+    double distance;
+    int isFeasible;
 
+    // for (int i = 0; i < 2000; ++i) {
+
+    
     for (int i = 0; i ==i; ++i) {
+
         Solution solution;
         solution.simple_greedy(instance, seed + i);
-
-        double distance;
-        int isFeasible;
-        distance,isFeasible = solution.evaluate(instance);
-        if (distance <= best_distance) {
+        
+        distance = solution.evaluate(instance);
+        isFeasible = solution.isFeasible; // Acceder al miembro de la clase
+        
+        if (isFeasible && distance <= best_distance) {
             best_distance = distance;
             best_solution = solution;
         }
         
-        if(solution.isFeasible){
+        if (solution.isFeasible) {
             break;
         }
         current_iteration++;
-
     }
 
     auto end_time = std::chrono::steady_clock::now();

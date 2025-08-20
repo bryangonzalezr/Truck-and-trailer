@@ -29,57 +29,60 @@ void Solution::precompute_distances(Instance& instance) {
 }
 
 double Solution::evaluate(Instance& instance) {
-    isFeasible = true;
+    this->isFeasible = true;
     double total_distance = 0;
     for (Route& route : routes) {
         total_distance += route.total_distance(instance.deposit);
     }
-    //check if all instance.clients are on route.assigned_clients
     for (Client* client : instance.clients) {
         if (assigned_clients.count(client) == 0) {
-            isFeasible = false;
+            //Big number to indicate infeasibility
+            total_distance += 10000;
+            this->isFeasible = false;
             
         }
     }
-
-    return total_distance,isFeasible ? 0 : 1;
+    return total_distance;
     
 }
 
 Client* Solution::select_next_client(Instance& instance, Route& route, std::mt19937& gen) {
     int current_location = route.clients.empty() ? 0 : route.clients.back()->number;
     vector<pair<double, Client*>> sorted_clients;
+
+    // Evaluar clientes factibles
     for (Client* client : instance.clients) {
-        if (assigned_clients.count(client) == 0 
-        && (client->truck_customer? route.current_truck_capacity : route.get_current_capacity()) >= client->demand){
-        
+        if (assigned_clients.count(client) == 0 &&
+           (client->truck_customer ? route.current_truck_capacity 
+                                   : route.get_current_capacity()) >= client->demand) {
             
             double distance = distances[current_location][client->number];
-            double distance_back = (route.trailer_location ==nullptr) ? 
-                distances[client->number][0] : 
-                distances[client->number][route.trailer_location->number];
-            double fitness = (distance)* (distance_back/route.get_current_capacity());
+            double distance_back = (route.trailer_location == nullptr) ? 
+                                   distances[client->number][0] : 
+                                   distances[client->number][route.trailer_location->number];
+            
+            double fitness = (distance) * (distance_back/route.get_current_capacity());
 
             sorted_clients.emplace_back(fitness, client);
         }
     }
 
-    
+    if (sorted_clients.empty()) {
+        return nullptr;
+    }
+
     sort(sorted_clients.begin(), sorted_clients.end());
-    
-    
 
-
-    double average = instance.getTotalDemand()/instance.N_trucks;
+    // Se suaviza la menalización de cuadrática a lineal
+    double average = instance.getTotalDemand() / (double) instance.N_trucks;
     double penalty = 0.0;
-    if(route.total_demand() > average){
-        double alpha = 1;
-        penalty = pow((route.total_demand()-average)/(alpha*average),2);
+    if (route.total_demand() > average) {
+        penalty = (route.total_demand() - average) / average;
     }
 
     if (!sorted_clients.empty()) {
         vector<Client*> candidates;
-        int count = min(3, (int)sorted_clients.size());
+        int count = min(5, (int)sorted_clients.size());
         if(route.clients.empty()){
             for (int i = 0; i < sorted_clients.size(); i++)
             {

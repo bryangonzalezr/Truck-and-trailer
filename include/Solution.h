@@ -16,6 +16,7 @@ public:
     std::vector<Route> routes;
     std::unordered_set<Client*> assigned_clients;
     std::unordered_map<int, std::unordered_map<int, double>> distances;
+    
 
     void construct_routes(std::vector<Client*>& clients, Truck* truck, Trailer* trailer);
     void precompute_distances(Instance& instance);
